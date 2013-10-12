@@ -1,7 +1,7 @@
 class Resources
   class << self
     def create(browser)
-      browser.ul(id: 'menuTable').element(text: 'Ressources').click
+      browser.ul(id: 'menuTable').element(class: 'menubutton', text: 'Ressources').click
       browser.div(class: resource_div_id).element(class: 'fastBuild').click
     end
 
