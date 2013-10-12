@@ -1,4 +1,10 @@
+firefox_profile: default
 auth:
-  server:
-  login:
-  passwd:
+  server: 
+  login: 
+  passwd: 
+planets:
+  - 'x:xxx:x'
+  - 'x:xxx:x'
+  - 'x:xxx:x'
+  - 'x:xxx:x'

@@ -10,7 +10,7 @@ class Obot
 
   def initialize(config_file)
     @config  = YAML.load_file(config_file)
-    @browser = Watir::Browser.new :firefox
+    @browser = Watir::Browser.new :firefox, profile: @config['firefox_profile']
 
     login
   end
@@ -22,6 +22,12 @@ class Obot
     @browser.text_field(id: 'usernameLogin').set(@config['auth']['login'])
     @browser.text_field(id: 'passwordLogin').set(@config['auth']['passwd'])
     @browser.element(id: 'loginSubmit').click
+  end
+
+  def watch_for_attack
+    @browser.refresh
+    attack = @browser.element(id: 'attack_alert').attribute_value('class') =~ /( soon)/
+    !attack.nil?
   end
 
   def switch_planet(planet_number)
