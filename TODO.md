@@ -1,11 +1,3 @@
-# Step 0 - Structuration
-
-* configuration dans un fichier et git init
-* Structurer tout ce bordel
-  * classes
-  * configuration
-  * persistence en fichier (comme dernier pastisrb)
-
 # Step 1 - Détecter une attaque
 
 * refresh du navigateur toute les xx minutes
