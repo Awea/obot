@@ -7,42 +7,41 @@ require_relative 'obot/resources'
 require_relative 'obot/strategy_move'
 
 class Obot
-  ROOT_PATH = 'http://ogame.fr'
-
   def initialize(config_file)
-    @config  = YAML.load_file(config_file)
-    @browser = Watir::Browser.new :firefox, profile: @config['firefox_profile']
+    @config         = YAML.load_file(config_file)
+    @browser        = Watir::Browser.new :firefox, profile: @config['firefox_profile']
+    @planets        = @config['planets']
 
     login
   end
 
   def default_response_for_attacks
-    attacked_coordinates = get_attack_coordinates
-    puts attacked_coordinates
+    get_attacks_coordinates.each do |attacked_planet|    
+      switch_planet(attacked_planet)
+      StrategyMove.proceed(@browser, first_unatacked_planet(attacked_planet))
 
-    switch_planet(attacked_coordinates)
-    StrategyMove.proceed(@browser, first_unatacked_planet(attacked_coordinates))
+      sleep [0..10]
+    end
   end
 
-  # What happen if we have more than one td ?
-  # Must turn this to always return an array
-  # Return format : [x:x:x]
-  def get_attack_coordinates
+  def get_attacks_coordinates
     div_attack_alert.click
     @browser
-      .table(id: 'eventContent')
+      .table(id: 'eventContent').when_present
         .tr(class: 'eventFleet', data_mission_type: '1')
-          .td(class: 'destCoords').text
+          .tds(class: 'destCoords').map{ |attack|
+            attack.when_present.text
+          }
   end
 
   def first_unatacked_planet(attacked_coordinates)
-    planets = @config['planets']
+    planets = @planets
     planets.delete_if { |planet| "[#{planet}]" == attacked_coordinates }
     planets.first
   end
 
   def login
-    @browser.goto ROOT_PATH
+    @browser.goto 'http://ogame.fr'
     @browser.element(id: 'loginBtn').click
     @browser.select(id: 'serverLogin').select(@config['auth']['server'])
     @browser.text_field(id: 'usernameLogin').set(@config['auth']['login'])

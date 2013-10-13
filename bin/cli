@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+require 'thor'
+
+require_relative '../lib/obot'
+require_relative '../lib/obot/loop'
+
+class ObotCLI < Thor
+  option :config_file
+  desc 'default_loop', 'run the default_loop'
+  def default_loop
+    obot = Obot.new(
+      options[:config_file] ? options[:config_file] : 'config.yml'
+    )
+    bot_loop(obot).run_default
+  end
+
+  private
+
+  def bot_loop
+    Loop.new(obot)
+  end
+end
+
+ObotCLI.start(ARGV)

@@ -31,6 +31,6 @@
 
 set :output, "/Users/aweaoftheworld/.in-progress/ogamebot/cron_log.log"
 
-every '0 05 12 10 5' do
-  command "/Users/aweaoftheworld/.rvm/bin/ruby-2.0.0-p247 /Users/aweaoftheworld/.in-progress/ogamebot/bot.rb"
-end 
+#every '0 05 12 10 5' do
+#  command "/Users/aweaoftheworld/.rvm/bin/ruby-2.0.0-p247 /Users/aweaoftheworld/.in-progress/ogamebot/bot.rb"
+#end 
