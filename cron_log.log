@@ -1,9 +1,0 @@
-/Users/aweaoftheworld/.rvm/rubies/ruby-1.9.3-p362/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `require': cannot load such file -- watir-webdriver (LoadError)
-	from /Users/aweaoftheworld/.rvm/rubies/ruby-1.9.3-p362/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
-	from /Users/aweaoftheworld/.in-progress/ogamebot/bot.rb:1:in `<main>'
-/Users/aweaoftheworld/.rvm/gems/ruby-2.0.0-p247/gems/watir-webdriver-0.6.4/lib/watir-webdriver/elements/element.rb:490:in `assert_exists': unable to locate element, using {:id=>"loginBtn"} (Watir::Exception::UnknownObjectException)
-	from /Users/aweaoftheworld/.rvm/gems/ruby-2.0.0-p247/gems/watir-webdriver-0.6.4/lib/watir-webdriver/elements/element.rb:118:in `click'
-	from /Users/aweaoftheworld/.in-progress/ogamebot/bot.rb:11:in `<main>'
-/Users/aweaoftheworld/.rvm/gems/ruby-2.0.0-p247/gems/watir-webdriver-0.6.4/lib/watir-webdriver/elements/element.rb:490:in `assert_exists': unable to locate element, using {:class=>"fastBuild"} (Watir::Exception::UnknownObjectException)
-	from /Users/aweaoftheworld/.rvm/gems/ruby-2.0.0-p247/gems/watir-webdriver-0.6.4/lib/watir-webdriver/elements/element.rb:118:in `click'
-	from /Users/aweaoftheworld/.in-progress/ogamebot/bot.rb:24:in `<main>'
