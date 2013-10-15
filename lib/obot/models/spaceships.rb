@@ -22,9 +22,13 @@ class Spaceships
     end
 
     def transfert_transports(coordinates_origin, destination_id)
-      origin_id = Planets.find_by_coordinates(origin)[:id]
+      origin_id = Planets.find_by_coordinates(coordinates_origin)[:id]
 
       items.where("planet_id == '#{origin_id}'").update(planet_id: destination_id)
+    end
+
+    def transports_available_by_planet(planet_id)
+      items.where("planet_id == '#{planet_id}'").count
     end
 
     def items

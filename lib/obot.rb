@@ -27,6 +27,7 @@ class Obot
   # Need to move this somewhere else, it's a procedure
   def default_response_for_attacks
     get_attacks_coordinates.each do |attacked_planet|    
+      puts "attacked on #{attacked_planet}"
       switch_planet(attacked_planet)
       StrategyMove.proceed(@browser, attacked_planet, first_unatacked_planet(attacked_planet)) if StrategyMove.ready?(attacked_planet)
 
