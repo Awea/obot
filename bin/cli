@@ -1,11 +1,15 @@
 #!/usr/bin/env ruby
 
 require 'thor'
+require 'sequel'
 
 require_relative '../lib/obot'
 require_relative '../lib/obot/loop'
 
+DB = Sequel.sqlite
+
 class ObotCLI < Thor
+
   option :config_file
   desc 'default_loop', 'run the default_loop'
   def default_loop
@@ -15,9 +19,19 @@ class ObotCLI < Thor
     bot_loop(obot).run_default
   end
 
+  desc 'test', 'for test only'
+  def test
+    obot = Obot.new(
+      options[:config_file] ? options[:config_file] : 'config.yml',
+      false
+    )
+
+    puts obot.first_unatacked_planet('[3:189:7]').inspect
+  end
+
   private
 
-  def bot_loop
+  def bot_loop(obot)
     Loop.new(obot)
   end
 end

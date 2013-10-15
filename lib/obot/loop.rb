@@ -8,7 +8,7 @@ class Loop
     attack = false
     until attack
       attack = @obot.watch_for_attack
-      sleep @sleep_time
+      sleep @sleep_time * rand(1..30)
     end
     @obot.default_response_for_attacks
 
