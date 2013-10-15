@@ -16,6 +16,10 @@ class Obot
     @browser = new_browser if browser
     @planets = Planets.store_planets(@config['planets']) 
 
+    @browser.add_checker do |page|
+      page.alert.close if page.alert.exists?
+    end
+
     login
     get_data_strategy
   end
