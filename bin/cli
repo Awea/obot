@@ -2,11 +2,17 @@
 
 require 'thor'
 require 'sequel'
+require 'watir-webdriver'
 
 require_relative '../lib/obot'
 require_relative '../lib/obot/loop'
 
-DB = Sequel.sqlite
+DB  = Sequel.sqlite
+NAV = Watir::Browser.new :firefox, profile: 'default'
+
+NAV.add_checker do |page|
+  page.alert.close if page.alert.exists?
+end
 
 class ObotCLI < Thor
 
@@ -16,23 +22,7 @@ class ObotCLI < Thor
     obot = Obot.new(
       options[:config_file] ? options[:config_file] : 'config.yml'
     )
-    bot_loop(obot).run_default
-  end
-
-  desc 'test', 'for test only'
-  def test
-    obot = Obot.new(
-      options[:config_file] ? options[:config_file] : 'config.yml',
-      false
-    )
-
-    puts obot.first_unatacked_planet('[3:189:7]').inspect
-  end
-
-  private
-
-  def bot_loop(obot)
-    Loop.new(obot)
+    Loop.new(obot).run_default
   end
 end
 

@@ -1,5 +1,9 @@
 class Planets
   class << self
+    def all
+      items.all
+    end
+
     def table_name
       :planets
     end
@@ -7,6 +11,10 @@ class Planets
     def find_by_coordinates(coordinates)
       puts "find_by_coordinates #{coordinates}"
       items.where("coordinates == '#{coordinates}'").first
+    end
+
+    def find_first_unatacked_planet(attacked_coordinates)
+      items.where("coordinates != '#{attacked_coordinates}'").first
     end
 
     def create_table
