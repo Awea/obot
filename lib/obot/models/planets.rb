@@ -26,6 +26,7 @@ class Planets
 
     def store_planets(planets)
       planets.each do |planet|
+        puts "insert planet #{planet}"
         items.insert(coordinates: planet)
       end
 

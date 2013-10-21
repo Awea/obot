@@ -5,14 +5,16 @@ class Loop
     @first_run  = true
 
     Interface::Start.login(@obot.config['auth'])
-    Strategy::Move.ready_to_proceed
+    Strategies::Move.ready_to_proceed
   end
 
   def run_default
     attack = false
     until attack
+      puts "intoooo the looop"
       attack = Sensors::Attack.watch_for_attack
       sleep @sleep_time * rand(1..30) unless @first_run
+      @first_run = false if @first_run
     end
     @obot.default_response_for_attacks
 

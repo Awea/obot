@@ -5,7 +5,6 @@ require 'sequel'
 require 'watir-webdriver'
 
 require_relative '../lib/obot'
-require_relative '../lib/obot/loop'
 
 DB  = Sequel.sqlite
 NAV = Watir::Browser.new :firefox, profile: 'default'

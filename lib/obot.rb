@@ -3,6 +3,7 @@ require 'yaml'
 #require 'watir-webdriver'
 
 # Obot files
+require_relative 'obot/loop'
 require_relative 'obot/strategies/move'
 require_relative 'obot/interface/start'
 require_relative 'obot/interface/menu'
@@ -21,7 +22,7 @@ class Obot
     Sensors::Attack.get_coordinates.each do |attacked_planet|    
       puts "attacked on #{attacked_planet}"
       Interface::Menu.switch_planet(attacked_planet)
-      StrategyMove.proceed(attacked_planet)
+      Strategies::Move.proceed(attacked_planet)
 
       sleep rand(1..10)
     end

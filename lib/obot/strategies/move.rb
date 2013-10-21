@@ -11,11 +11,10 @@ module Strategies
       Spaceships.create_table
 
       # Grab all planets coordinates and store them
-      planets = NAV.div(id: 'planetList').when_present
-                  .element(class: 'planetlink')
-                  .spans(class: 'planet-koords').map{ |coordinates|
+      planets = NAV.spans(class: 'planet-koords').map{ |coordinates|
                     coordinates.when_present.text
                   }
+      puts planets.inspect
       Planets.store_planets(planets) 
 
       # For each planets get the current fleet

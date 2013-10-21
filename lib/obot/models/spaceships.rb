@@ -14,7 +14,7 @@ class Spaceships
 
     def add_transports_to_planet(transports_count, planet_id)
       transports_count.to_i.times do 
-        puts "add transport to  #{planet_id}"
+        puts "add transport to #{planet_id}"
         items.insert(type: 'grand_transport', planet_id: planet_id)
       end
 
