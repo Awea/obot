@@ -34,7 +34,7 @@ module Strategies
     # origin is a [c:o:d]
     # destination is an array from Planets class :s
     def proceed(origin)
-      return false unless StrategyMove.ready?(origin)
+      return false unless ready?(origin)
 
       destination = Planets.find_first_unatacked_planet(origin)
       # Go in fleet

@@ -13,6 +13,7 @@ class Loop
     until attack
       puts "intoooo the looop"
       attack = Sensors::Attack.watch_for_attack
+      puts "You are under attack !" if attack
       sleep @sleep_time * rand(1..30) unless @first_run
       @first_run = false if @first_run
     end

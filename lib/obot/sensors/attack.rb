@@ -5,6 +5,11 @@ module Sensors
     end
     module_function :div_attack_alert
 
+    def div_attack_alert?
+      div_attack_alert.exist?
+    end
+    module_function :div_attack_alert?
+
     def get_coordinates
       open_div_attack_alert
       NAV.table(id: 'eventContent').when_present
@@ -22,7 +27,7 @@ module Sensors
 
     def watch_for_attack
       NAV.refresh
-      attack = div_attack_alert.attribute_value('class') =~ / (soon|today)/
+      attack = div_attack_alert? ? div_attack_alert.attribute_value('class') =~ / (soon|today)/ : nil
       !attack.nil?
     end
     module_function :watch_for_attack
