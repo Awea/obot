@@ -1,6 +1,5 @@
 .DS_Store
 NOTES.md
 TODO.md
-config.yml
-test.config.yml
+config/config.yml
 bot.rb

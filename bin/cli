@@ -1,25 +1,18 @@
 #!/usr/bin/env ruby
 
 require 'thor'
-require 'sequel'
-require 'watir-webdriver'
 
 require_relative '../lib/obot'
-
-DB  = Sequel.sqlite
-NAV = Watir::Browser.new :firefox, profile: 'default'
-
-NAV.add_checker do |page|
-  page.alert.close if page.alert.exists?
-end
 
 class ObotCLI < Thor
 
   option :config_file
+  option :env
   desc 'default_loop', 'run the default_loop'
   def default_loop
     obot = Obot.new(
-      options[:config_file] ? options[:config_file] : 'config.yml'
+      options[:config_file] ? options[:config_file] : 'config/config.yml',
+      options[:env]         ? options[:env] : 'development'
     )
     Loop.new(obot).run_default
   end

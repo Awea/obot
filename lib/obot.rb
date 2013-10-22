@@ -1,6 +1,8 @@
 # Dependencies
+require 'sequel'
+require 'watir-webdriver'
 require 'yaml'
-#require 'watir-webdriver'
+require 'active_support/concern'
 
 # Obot files
 require_relative 'obot/loop'
@@ -11,11 +13,19 @@ require_relative 'obot/models/planets'
 require_relative 'obot/models/spaceships'
 require_relative 'obot/sensors/attack'
 
-class Obot
-  attr_reader :config
+DB  = Sequel.sqlite 
+NAV = Watir::Browser.new :firefox, profile: 'ogame'
 
-  def initialize(config_file)
-    @config  = YAML.load_file(config_file)
+NAV.add_checker do |page|
+  page.alert.close if page.alert.exists?
+end
+
+class Obot
+  def initialize(config_file, env)
+    @config  = YAML.load_file(config_file)[env]
+
+    Interface::Start.login(@config['auth'])
+    Strategies::Move.ready_to_proceed
   end
 
   def default_response_for_attacks

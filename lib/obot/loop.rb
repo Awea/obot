@@ -3,9 +3,6 @@ class Loop
     @obot       = obot
     @sleep_time = sleep_time
     @first_run  = true
-
-    Interface::Start.login(@obot.config['auth'])
-    Strategies::Move.ready_to_proceed
   end
 
   def run_default
