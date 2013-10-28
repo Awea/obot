@@ -9,5 +9,10 @@ module Interface
       NAV.element(id: 'loginSubmit').click
     end
     module_function :login
+
+    def logged_in?
+      NAV.title == 'Page d`accueil OGame'
+    end
+    module_function :logged_in?
   end
 end
