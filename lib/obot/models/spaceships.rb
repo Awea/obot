@@ -9,16 +9,13 @@ class Spaceships
         primary_key :id
         foreign_key :planet_id, :planets
         String :type
+        Integer :count
       end
     end
 
     def add_transports_to_planet(transports_count, planet_id)
-      transports_count.to_i.times do 
-        puts "add transport to #{planet_id}"
-        items.insert(type: 'grand_transport', planet_id: planet_id)
-      end
-
-      items
+      puts "add #{transports_count} transport to #{planet_id}"
+      items.insert(type: 'grand_transport', planet_id: planet_id, count: transports_count)
     end
 
     def transfert_transports(coordinates_origin, destination_id)
@@ -28,7 +25,7 @@ class Spaceships
     end
 
     def transports_available_by_planet(planet_id)
-      items.where("planet_id == '#{planet_id}'").count
+      items.where("planet_id == '#{planet_id}'").first.count
     end
 
     def items

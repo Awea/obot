@@ -21,7 +21,8 @@ module Strategies
       Planets.all.each do |planet|
         Interface::Menu.switch_planet(planet[:coordinates])
         move_to_origin
-        Spaceships.add_transports_to_planet(count_big_transports, planet[:id]) if big_transports?
+        big_transports = big_transports? ? count_big_transports : 0
+        Spaceships.add_transports_to_planet(big_transports, planet[:id])
       end
     end
     module_function :ready_to_proceed
