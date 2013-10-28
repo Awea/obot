@@ -40,7 +40,7 @@ module Strategies
       # Go in fleet
       move_to_origin
       # Select all big transport
-      big_transports_container(NAV).link(class: 'tooltip').click
+      big_transports_container.link(class: 'tooltip').click
       # Next fleet page
       NAV.link(id: 'continue').click
       sleep(2)
