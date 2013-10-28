@@ -1,10 +1,6 @@
-# Dependencies
-require 'sequel'
-require 'watir-webdriver'
 require 'yaml'
 require 'active_support/concern'
 
-# Obot files
 require_relative 'obot/loop'
 require_relative 'obot/strategies/move'
 require_relative 'obot/interface/start'
@@ -12,16 +8,6 @@ require_relative 'obot/interface/menu'
 require_relative 'obot/models/planets'
 require_relative 'obot/models/spaceships'
 require_relative 'obot/sensors/attack'
-
-DB  = Sequel.sqlite 
-
-client         = Selenium::WebDriver::Remote::Http::Default.new
-client.timeout = 120
-NAV            = Watir::Browser.new :firefox, profile: 'ogame', http_client: client
-
-NAV.add_checker do |page|
-  page.alert.close if page.alert.exists?
-end
 
 class Obot
   def initialize(config_file, env)

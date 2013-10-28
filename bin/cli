@@ -2,14 +2,16 @@
 
 require 'thor'
 
-require_relative '../lib/obot'
-
 class ObotCLI < Thor
 
   option :config_file
   option :env
   desc 'default_loop', 'run the default_loop'
   def default_loop
+    require_relative '../lib/browser'
+    require_relative '../lib/database'
+    require_relative '../lib/obot'
+
     obot = Obot.new(
       options[:config_file] ? options[:config_file] : 'config/config.yml',
       options[:env]         ? options[:env] : 'development'
