@@ -18,7 +18,7 @@ module Strategies
         Interface::Menu.switch_planet(planet[:coordinates])
         move_to_origin
         big_transports = big_transports? ? count_big_transports : 0
-        LargeCarrierFleet.new(planet_id[:id], big_transports).save
+        LargeCarrierFleet.new(planet[:id], big_transports).save
       end
     end
     module_function :ready_to_proceed
