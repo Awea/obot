@@ -25,8 +25,10 @@ __OSX__
 
 __OSX__
 
-On OSX you have to turn on the at command :
+On OSX you have to enable the daemon :
 
 ```shell
 sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.atrun.plist
 ```
+
+Then add your username to `/var/at/at.allow`
