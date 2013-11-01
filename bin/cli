@@ -8,6 +8,7 @@ class ObotCLI < Thor
   option :env
   desc 'default_loop', 'run the default_loop'
   def default_loop
+    require_relative '../lib/loop'
     require_relative '../lib/browser'
     require_relative '../lib/database'
     require_relative '../lib/obot'

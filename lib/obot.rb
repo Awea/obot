@@ -1,12 +1,9 @@
 require 'yaml'
 require 'active_support/concern'
 
-require_relative 'obot/loop'
 require_relative 'obot/strategies/move'
 require_relative 'obot/interface/start'
 require_relative 'obot/interface/menu'
-require_relative 'obot/models/planets'
-require_relative 'obot/models/spaceships'
 require_relative 'obot/sensors/attack'
 
 class Obot
@@ -14,6 +11,7 @@ class Obot
     @config  = YAML.load_file(config_file)[env]
 
     login
+    
     Strategies::Move.ready_to_proceed
   end
 

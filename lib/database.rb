@@ -1,3 +1,5 @@
-require 'sequel'
+require 'pstore'
 
-DB  = Sequel.sqlite 
+# Models
+require_relative 'obot/models/planet'
+require_relative 'obot/models/large_carrier_fleet'
