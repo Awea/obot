@@ -1,5 +1,5 @@
-module Strategies
-  module Move
+module Behaviours
+  module MoveMinerals
     def move_to_origin
       NAV.ul(id: 'menuTable').element(class: 'menubutton', text: 'Flotte').click
     end
@@ -32,6 +32,8 @@ module Strategies
     # destination is an array from Planets class :s
     def proceed(origin)
       return false unless ready?(origin)
+      Interface::Menu.switch_planet(origin)
+      
       origin      = Planets.find_by_coordinates(origin)
       destination = Planets.find_first_unatacked_planet(origin)
       # Go in fleet

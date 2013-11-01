@@ -10,6 +10,7 @@ class Loop
     until attack
       puts "intoooo the looop"
       @obot.login if @obot.need_to_login_again?
+      @obot.build_something?
       attack = Sensors::Attack.watch_for_attack
       puts "You are under attack !" if attack
       sleep @sleep_time * rand(1..30) unless @first_run

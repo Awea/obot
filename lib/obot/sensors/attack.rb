@@ -18,11 +18,12 @@ module Sensors
     def tr_attack?
       tr_attack.exist?
     end
+    module_function :tr_attack?
 
     def get_coordinates
       open_div_attack_alert
       tr_attack.tds(class: 'destCoords').map{ |attack|
-        attack.when_present.text
+        attack.when_present.text.gsub(/\[|\]/, '')
       } if tr_attack?
     end
     module_function :get_coordinates
