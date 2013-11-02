@@ -8,6 +8,7 @@ class ObotCLI < Thor
   option :env
   desc 'default_loop', 'run the default_loop'
   def default_loop
+    require_relative '../lib/loop'
     require_relative '../lib/browser'
     require_relative '../lib/database'
     require_relative '../lib/obot'
@@ -17,6 +18,20 @@ class ObotCLI < Thor
       options[:env]         ? options[:env] : 'development'
     )
     Loop.new(obot).run_default
+  end
+
+  desc 'build_at planet_coordinates, type, at', 'Add a build order for a given planet at a given time'
+  def build_at(planet_coordinates, type, at)
+    require_relative '../lib/database'
+
+    `echo "/Users/aweaoftheworld/.in-progress/obot/bin/cli do_build '#{planet_coordinates}' '#{type}'" | at #{at}`
+  end
+
+  desc 'do_build planet_coordinates, type', 'Write the order for the next loop'
+  def do_build(planet_coordinates, type)
+    require_relative '../lib/database'
+
+    BuildLoop.new(planet_coordinates, type).save
   end
 end
 

@@ -1,28 +1,24 @@
-module Strategies
-  module Move
+module Behaviours
+  module MoveMinerals
     def move_to_origin
       NAV.ul(id: 'menuTable').element(class: 'menubutton', text: 'Flotte').click
     end
     module_function :move_to_origin
 
     def ready_to_proceed
-      # Get the database ready
-      Planets.create_table
-      Spaceships.create_table
-
       # Grab all planets coordinates and store them
       planets = NAV.spans(class: 'planet-koords').map{ |coordinates|
                     coordinates.when_present.text
                   }
       puts planets.inspect
-      Planets.store_planets(planets) 
+      Planets.store_scraped_planets(planets) 
 
       # For each planets get the current fleet
       Planets.all.each do |planet|
         Interface::Menu.switch_planet(planet[:coordinates])
         move_to_origin
         big_transports = big_transports? ? count_big_transports : 0
-        Spaceships.add_transports_to_planet(big_transports, planet[:id])
+        LargeCarrierFleet.new(planet[:id], big_transports).save
       end
     end
     module_function :ready_to_proceed
@@ -36,7 +32,9 @@ module Strategies
     # destination is an array from Planets class :s
     def proceed(origin)
       return false unless ready?(origin)
-
+      Interface::Menu.switch_planet(origin)
+      
+      origin      = Planets.find_by_coordinates(origin)
       destination = Planets.find_first_unatacked_planet(origin)
       # Go in fleet
       move_to_origin
@@ -60,7 +58,7 @@ module Strategies
       # Launch fleet
       NAV.link(id: 'start').click
     
-      Spaceships.transfert_transports(origin, destination[:id])
+      LargeCarrierFleets.transfert(origin[:id], destination[:id])
     end
     module_function :proceed
 
@@ -71,7 +69,7 @@ module Strategies
 
     def persisted_big_transports?(coordinates)
       planet = Planets.find_by_coordinates(coordinates)
-      Spaceships.transports_available_by_planet(planet[:id]) > 0
+      LargeCarrierFleets.available_by_planet(planet[:id]) > 0
     end
     module_function :persisted_big_transports?
 

@@ -1,4 +1,5 @@
 .DS_Store
+*.pstore
 NOTES.md
 TODO.md
 config/config.yml

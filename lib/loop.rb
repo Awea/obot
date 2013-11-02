@@ -6,17 +6,27 @@ class Loop
   end
 
   def run_default
-    attack = false
+    attack       = false
+    time_in_loop = 0
+
     until attack
       puts "intoooo the looop"
       @obot.login if @obot.need_to_login_again?
-      attack = Sensors::Attack.watch_for_attack
+      @obot.build_something?
+      attack = Sensors::Attack.watch_for_attack if time_in_loop == sleep_time
       puts "You are under attack !" if attack
-      sleep @sleep_time * rand(1..30) unless @first_run
-      @first_run = false if @first_run
+      sleep 1
+      time_in_loop += 1
+      @first_run    = false if @first_run
     end
     @obot.default_response_for_attacks
 
     run_default
+  end
+
+  private
+  
+  def sleep_time
+    @sleep_time * rand(1..30)
   end
 end

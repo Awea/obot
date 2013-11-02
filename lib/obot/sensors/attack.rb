@@ -5,18 +5,26 @@ module Sensors
     end
     module_function :div_attack_alert
 
+    def tr_attack
+      NAV.table(id: 'eventContent').tr(class: 'eventFleet', data_mission_type: '1')
+    end
+    module_function :tr_attack
+
     def div_attack_alert?
       div_attack_alert.exist?
     end
     module_function :div_attack_alert?
 
+    def tr_attack?
+      tr_attack.exist?
+    end
+    module_function :tr_attack?
+
     def get_coordinates
       open_div_attack_alert
-      NAV.table(id: 'eventContent').when_present
-        .tr(class: 'eventFleet', data_mission_type: '1')
-        .tds(class: 'destCoords').map{ |attack|
-          attack.when_present.text
-        }
+      tr_attack.tds(class: 'destCoords').map{ |attack|
+        attack.when_present.text.gsub(/\[|\]/, '')
+      } if tr_attack?
     end
     module_function :get_coordinates
 
