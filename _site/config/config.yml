@@ -1,0 +1,10 @@
+development:
+  auth:
+    server: Vega
+    login: &default_login awea
+    passwd: &default_passwd metroid2
+production:
+  auth:
+    server: Wasat
+    login: *default_login
+    passwd: *default_passwd
