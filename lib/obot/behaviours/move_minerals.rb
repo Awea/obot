@@ -9,8 +9,8 @@ module Behaviours
     def proceed(origin)
       Interface::Menu.switch_planet(origin)
       
-      origin      = Planets.find_by_coordinates(origin)
-      destination = Planets.find_first_unatacked_planet(origin)
+      origin      = Planet.find_by_coordinates(origin)
+      destination = Planet.find_first_unatacked_planet(origin)
       # Go in fleet
       move_to_origin
 

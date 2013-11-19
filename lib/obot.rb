@@ -38,7 +38,7 @@ class Obot
                   coordinates.when_present.text
                 }
     puts planets.inspect
-    Planets.store_scraped_planets(planets) 
+    Planet.store_scraped_planets(planets) 
   end
 
   def login

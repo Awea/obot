@@ -1,17 +1,19 @@
-class Planets
+class Planet
+  attr_reader :coordinates
+
   class << self
     def all
       result = nil
 
-      data.transaction(true) do |planets|
-        result = collection(planets)
+      pstore.transaction(true) do |pstore|
+        result = collection(pstore)
       end
       result
     end
 
     def add(planet)
-      data.transaction do |planets| 
-        collection(planets).push({
+      pstore.transaction do |pstore| 
+        collection(pstore).push({
           coordinates:  planet.coordinates
         })
       end 
@@ -19,8 +21,8 @@ class Planets
 
     def find_by_coordinates(coordinates)
       result = nil
-      data.transaction(true) do |planets|
-        result = collection(planets).select { |planet| planet[:coordinates] == coordinates }.first
+      pstore.transaction(true) do |pstore|
+        result = collection(pstore).select { |planet| planet[:coordinates] == coordinates }.first
       end
 
       result
@@ -28,8 +30,8 @@ class Planets
 
     def find_first_unatacked_planet(attacked_coordinates)
       result = nil
-      data.transaction(true) do |planets|
-        result = collection(planets).select { |planet| planet[:coordinates] != attacked_coordinates }.first
+      pstore.transaction(true) do |pstore|
+        result = collection(pstore).select { |planet| planet[:coordinates] != attacked_coordinates }.first
       end
 
       result
@@ -38,36 +40,32 @@ class Planets
     def store_scraped_planets(scraped_coordinates)
       clean_planets = scraped_coordinates.each_with_object([]) do |coordinates, res|
         res.push({
-          coordinates: Planet.new(coordinates).coordinates
+          coordinates: self.new(coordinates).coordinates
         })
       end
 
-      data.transaction do |planets|
-        collection(planets).concat(clean_planets)
+      pstore.transaction do |pstore|
+        collection(pstore).concat(clean_planets)
       end
     end
 
     private
 
-    def data
+    def pstore
       PStore.new("data/database.pstore")
     end
 
-    def collection(planets)
-      planets[:planets] ||= Array.new
+    def collection(pstore)
+      pstore['planets'] ||= Array.new
     end
   end
-end
-
-class Planet
-  attr_reader :coordinates
 
   def initialize(coordinates)
     @coordinates = sanitize_coordinates(coordinates)
   end
 
   def save
-    Planets.add(self)
+    Planet.add(self)
   end
 
   private

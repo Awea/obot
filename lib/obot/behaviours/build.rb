@@ -1,16 +1,15 @@
 module Behaviours
   class Build
     class << self
-      def find_interface_link(order_interface)
+      def cli_interface_to_nav_link(cli_interface)
         if order_interface == 'in'
           'Installations'
-        else
+        elsif order_interface == 'Ressources'
           'Ressources'
         end
       end
 
       def move_to_origin(text_link)
-        #NAV.ul(id: 'menuTable').element(class: 'menubutton', text: 'Ressources').click
         NAV.ul(id: 'menuTable').element(class: 'menubutton', text: text_link).click
       end
 

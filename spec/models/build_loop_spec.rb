@@ -3,7 +3,7 @@ require_relative '../../lib/obot/models/build_loop'
 
 describe BuildLoop do
   before do
-    remove_data('data/*')
+    remove_data
   end
 
   describe "what i'm doing" do

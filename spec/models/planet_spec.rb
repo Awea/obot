@@ -2,8 +2,8 @@ require_relative 'model_spec_helper'
 require_relative '../../lib/obot/models/planet'
 
 describe Planet do
-  before do
-    remove_data('data/planets.pstore')
+  before(:each) do
+    remove_data
   end
 
   describe "planet life" do
@@ -13,18 +13,18 @@ describe Planet do
 
     it "can be save" do
       expect{ subject.save }.to_not raise_error
-      Planets.all.should include(coordinates: '5:12:28')
+      Planet.all.should include(coordinates: '5:12:28')
     end
   end
 
-  describe "spaceships collection" do
+  describe "bot usage of planet" do
     it "can be fill with an array of scrapped planets coordinates" do
       list = [
         '[2:189:12]', '[2:218:2]', '[4:187:5]'
       ]
-      Planets.store_scraped_planets(list)
+      Planet.store_scraped_planets(list)
 
-      Planets.all.should include({coordinates: '2:189:12'}, {coordinates: '2:218:2'}, {coordinates: '4:187:5'})
+      Planet.all.should include({coordinates: '2:189:12'}, {coordinates: '2:218:2'}, {coordinates: '4:187:5'})
     end
   end
 end
