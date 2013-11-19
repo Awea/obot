@@ -14,7 +14,7 @@ class ObotCLI < Thor
     require_relative '../lib/obot'
 
     # Clean data files 
-    # Better file management using last update time
+    # Better file management using last update time + env in file name
     Dir.foreach('data') {|f| fn = File.join('data', f); File.delete(fn) if f != '.' && f != '..'}
 
     obot = Obot.new(

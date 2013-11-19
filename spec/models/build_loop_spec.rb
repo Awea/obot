@@ -6,18 +6,13 @@ describe BuildLoop do
     remove_data('data/*')
   end
 
-  describe "planet life" do
-    let!(:subject){ BuildLoop.new('5:12:28', 1) }
+  describe "what i'm doing" do
+    let!(:subject){ BuildLoop.new('5:12:28', 'su:deut') }
 
-    its(:to_h){ should eq({coordinates:'5:12:28', type: 1})}
-
-    it "can be save" do
+    it "is deleted after it was used" do
       subject.save
       BuildLoops.any?.should be_true
-      BuildLoops.all.should include({coordinates:'5:12:28', type: '1'})
-      Dir.entries('data').select do |entry| 
-        entry.start_with?('build_')
-      end.empty?.should be_true
+      BuildLoops.all.first.should be_kind_of(BuildLoop)
       BuildLoops.any?.should be_false
     end
   end

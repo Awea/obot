@@ -17,6 +17,8 @@ class Loop
 
       if watching_period?
         @time_since_last_watch += 1     
+      elsif  @sleep_time < @time_since_last_watch
+        @time_since_last_watch = 0
       else
         @time_since_last_watch = 0
       end

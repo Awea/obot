@@ -1,5 +1,0 @@
-production:
-  auth:
-    server: 'server eg: Wasat, Fornax, etc…'
-    login: 'login'
-    passwd: 'password'

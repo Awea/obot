@@ -13,7 +13,7 @@ class BuildLoops
     def all
       collection.map do |file_name|
         File.delete("data/#{file_name}")
-        BuildLoop.load_from_file_name(file_name).to_h
+        BuildLoop.load_from_file_name(file_name)
       end
     end
 
@@ -41,18 +41,19 @@ class BuildLoop
     @type               = type
   end
 
+  def interface
+    @type.split(':')[0]
+  end
+
+  def building
+    @type.split(':')[1]
+  end
+
   def file_name
     "build_#{@planet_coordinates}_#{@type}_#{SecureRandom.hex(20)}"
   end
 
   def save
     BuildLoops.add(self)
-  end
-
-  def to_h
-    {
-      coordinates: @planet_coordinates,
-      type:        @type
-    }
   end
 end

@@ -5,6 +5,7 @@ require_relative 'obot/behaviours/move_minerals'
 require_relative 'obot/behaviours/build'
 require_relative 'obot/interface/start'
 require_relative 'obot/interface/menu'
+require_relative 'obot/interface/building'
 require_relative 'obot/sensors/attack'
 
 class Obot
@@ -12,8 +13,7 @@ class Obot
     @config  = YAML.load_file(config_file)[env]
 
     login
-    
-    Behaviours::MoveMinerals.ready_to_proceed
+    get_planets
   end
 
   def build_something?
@@ -30,6 +30,15 @@ class Obot
 
       sleep rand(1..10)
     end
+  end
+
+  def get_planets
+    # Grab all planets coordinates and store them
+    planets = NAV.spans(class: 'planet-koords').map{ |coordinates|
+                  coordinates.when_present.text
+                }
+    puts planets.inspect
+    Planets.store_scraped_planets(planets) 
   end
 
   def login
