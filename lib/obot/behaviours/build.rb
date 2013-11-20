@@ -2,10 +2,16 @@ module Behaviours
   class Build
     class << self
       def cli_interface_to_nav_link(cli_interface)
-        if order_interface == 'in'
+        if cli_interface == 'in'
           'Installations'
-        elsif order_interface == 'Ressources'
+        elsif ['re', 'su'].include?(cli_interface)
           'Ressources'
+        elsif cli_interface == 'sc'
+          # 'Recherche'
+          # We need another build management construction
+          # Need to handle all li and ul whatever construct / search / production it is
+          # Try to write spec about it ?
+          raise NotImplementedError
         end
       end
 
@@ -18,7 +24,7 @@ module Behaviours
 
         orders.each do |order|
           Interface::Menu.switch_planet(order.planet_coordinates)
-          move_to_origin(find_interface_link(order.interface))
+          move_to_origin(cli_interface_to_nav_link(order.interface))
           Interface::Building.new(order).click
         end
       end
