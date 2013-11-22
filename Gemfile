@@ -2,6 +2,5 @@
 source "https://rubygems.org"
 
 gem "watir-webdriver"
-gem "whenever"
 gem "thor"
 gem "rspec"
