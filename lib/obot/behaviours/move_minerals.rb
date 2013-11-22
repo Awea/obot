@@ -1,17 +1,14 @@
 module Behaviours
-  module MoveMinerals
+  class MoveMinerals
     def move_to_origin
       NAV.ul(id: 'menuTable').element(class: 'menubutton', text: 'Flotte').click
     end
-    module_function :move_to_origin
 
     # origin coordinates c:o:d
     def proceed(origin)
       Interface::Menu.switch_planet(origin)
       
-      origin      = Planet.find_by_coordinates(origin)
-      destination = Planet.find_first_unatacked_planet(origin)
-      # Go in fleet
+      destination = find_first_unatacked_planet(origin)
       move_to_origin
 
       return false unless big_transports? # Crappy debug
@@ -22,7 +19,7 @@ module Behaviours
       NAV.link(id: 'continue').click
       sleep(2)
       # Fill destination form
-      splitted_destination = destination[:coordinates].split(':')
+      splitted_destination = destination.split(':')
       NAV.text_field(id: 'galaxy').set(splitted_destination[0])
       NAV.text_field(id: 'system').set(splitted_destination[1])
       NAV.text_field(id: 'position').set(splitted_destination[2])
@@ -36,22 +33,23 @@ module Behaviours
       # Launch fleet
       NAV.link(id: 'start').click
     end
-    module_function :proceed
 
-    def big_transports?
-       big_transports_container.exist?
-    end
-    module_function :big_transports?
-
-    def count_big_transports
-      sleep(2)
-      big_transports_container.when_present.link.text
-    end
-    module_function :count_big_transports
+    private
 
     def big_transports_container
       NAV.li(id: 'button203').div(class: 'buildingimg')
     end
-    module_function :big_transports_container
+
+    def big_transports?
+       big_transports_container.exist?
+    end
+
+    def find_first_unatacked_planet(attacked_coordinates)
+      NAV.spans(class: 'planet-koords').map{ |coordinates|
+        coordinates.when_present.text
+      }.select { |coordinates| 
+        coordinates != attacked_coordinates 
+      }.first
+    end
   end
 end

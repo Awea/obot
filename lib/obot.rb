@@ -1,5 +1,4 @@
 require 'yaml'
-require 'active_support/concern'
 
 require_relative 'obot/behaviours/move_minerals'
 require_relative 'obot/behaviours/build'
@@ -13,13 +12,12 @@ class Obot
     @config  = YAML.load_file(config_file)[env]
 
     login
-    get_planets
   end
 
   def build_something?
     if BuildLoops.any?
-      Behaviours::Build.proceed 
       puts "there is something to build !"
+      Behaviours::Build.proceed 
     end
   end
 
@@ -30,15 +28,6 @@ class Obot
 
       sleep rand(1..10)
     end
-  end
-
-  def get_planets
-    # Grab all planets coordinates and store them
-    planets = NAV.spans(class: 'planet-koords').map{ |coordinates|
-                  coordinates.when_present.text
-                }
-    puts planets.inspect
-    Planet.store_scraped_planets(planets) 
   end
 
   def login
