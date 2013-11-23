@@ -1,16 +1,26 @@
 module Interface
-  module Menu
-    def switch_planet(planet_coordinates)
-      NAV.span(
-        class: 'planet-koords', 
-        text: coordinates_to_regex(planet_coordinates)
-      ).click
-    end
-    module_function :switch_planet
+  class LeftMenu
+    class << self
+      %w{Installations Ressources}.each do |text_link|
+        define_method(text_link.downcase) { click_element(text_link) }
+      end
 
-    def coordinates_to_regex(coordinates)
-      Regexp.new(Regexp.quote("#{coordinates}"))
+      private
+
+      def click_element(text_link)
+        NAV.ul(id: 'menuTable').element(class: 'menubutton', text: text_link).click
+      end
     end
-    module_function :coordinates_to_regex
+  end
+
+  class RightMenu
+    class << self
+      def switch_planet(coordinates)
+        NAV.span(
+          class: 'planet-koords', 
+          text: Regexp.new(Regexp.quote("#{coordinates}"))
+        ).click
+      end
+    end
   end
 end

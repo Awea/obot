@@ -10,7 +10,7 @@ class Loop
 
     until attack
       @obot.login if @obot.need_to_login_again?
-      @obot.build_something?
+      @obot.do_orders
       attack = Sensors::Attack.watch_for_attack if time_to_watch?
       puts "You are under attack !" if attack
       sleep 1

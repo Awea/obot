@@ -14,13 +14,6 @@ class Obot
     login
   end
 
-  def build_something?
-    if BuildLoops.any?
-      puts "there is something to build !"
-      Behaviours::Build.proceed 
-    end
-  end
-
   def default_response_for_attacks 
     Sensors::Attack.get_coordinates.each do |attacked_planet|    
       puts "attacked on #{attacked_planet}"
@@ -28,6 +21,11 @@ class Obot
 
       sleep rand(1..10)
     end
+  end
+
+
+  def do_orders
+    Behaviours::Build.proceed 
   end
 
   def login

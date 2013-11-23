@@ -1,5 +1,9 @@
 module Interface
   class Building
+    def self.find(build_loop)
+      new(build_loop)
+    end
+
     def initialize(build_loop)
       @ul = uls[build_loop.interface.to_sym] 
       @li_class = @ul[:li_classes][build_loop.building.to_sym]
