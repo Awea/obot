@@ -29,7 +29,12 @@ module Sensors
       end
 
       def watch_for_attack
-        NAV.refresh
+        begin
+          NAV.refresh
+        rescue Net::ReadTimeout
+          sleep 30
+          watch_for_attack
+        end
         attack = div_attack_alert? ? div_attack_alert.attribute_value('class') =~ / (soon|today)/ : nil
         !attack.nil?
       end
