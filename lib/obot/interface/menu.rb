@@ -8,7 +8,7 @@ module Interface
       private
 
       def click_element(text_link)
-        NAV.ul(id: 'menuTable').element(class: 'menubutton', text: text_link).click
+        NAV.ul(id: 'menuTable').element(class: 'menubutton', text: text_link).when_present.click
       end
     end
   end
