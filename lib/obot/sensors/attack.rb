@@ -19,9 +19,14 @@ module Sensors
 
       def get_coordinates
         open_div_attack_alert
-        tr_attack.tds(class: 'destCoords').map{ |attack|
+        if tr_attack?
+          coordinates = tr_attack.tds(class: 'destCoords')
+        else
+          coordinates = []
+        end
+        coordinates.map{ |attack|
           attack.when_present.text.gsub(/\[|\]/, '')
-        } if tr_attack?
+        } 
       end
 
       def open_div_attack_alert
