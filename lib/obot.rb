@@ -5,6 +5,7 @@ require_relative 'obot/behaviours/build'
 require_relative 'obot/interface/start'
 require_relative 'obot/interface/menu'
 require_relative 'obot/interface/building'
+require_relative 'obot/interface/input'
 require_relative 'obot/sensors/attack'
 
 class Obot
